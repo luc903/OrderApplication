@@ -21,6 +21,15 @@ namespace OrderApplication.Infrastructure.Data.Configurations
 
             builder.Property(x => x.Status)
                 .IsRequired();
+
+            builder.HasMany(x => x.Items)
+                .WithOne()
+                .HasForeignKey(x => x.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Navigation(x => x.Items)
+                .HasField("_items")
+                .UsePropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }
